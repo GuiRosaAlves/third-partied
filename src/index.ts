@@ -16,6 +16,16 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+    maximizable: false,
+    resizable: false,
+    closable: true,
+    frame: true,
+    backgroundColor: '#000',
+    webPreferences: {
+      scrollBounce: false,
+      navigateOnDragDrop: false,
+      spellcheck: false,
+    }
   });
 
   // and load the index.html of the app.
