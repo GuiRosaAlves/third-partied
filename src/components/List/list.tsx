@@ -1,7 +1,16 @@
 import React from "react";
+import { Tool } from "../../firebase/types";
 import { Card } from "../Card/card";
 
-export const List = ({ color = "#fff", filter = "", data = [{}] }) => (
+export const List = ({
+  color = "#fff",
+  filter = "",
+  data = [],
+}: {
+  color?: string;
+  filter?: string;
+  data: Tool[];
+}) => (
   <div
     style={{
       height: "100%",
@@ -25,7 +34,7 @@ export const List = ({ color = "#fff", filter = "", data = [{}] }) => (
         }}
       >
         <div style={{ height: "100%", padding: "1%" }}>
-          <Card width="100%" height="100px"></Card>
+          <Card width="100%" height="100px" tool={value}></Card>
         </div>
       </div>
     ))}

@@ -5573,7 +5573,12 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.22.0"
 
-"react@^18.0.0", "react@^18.1.0":
+"react-icons@^4.4.0":
+  "integrity" "sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg=="
+  "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.4.0.tgz"
+  "version" "4.4.0"
+
+"react@*", "react@^18.0.0", "react@^18.1.0":
   "integrity" "sha1-b4YgOC3ssX/cXMIjoRXirb8QSJA="
   "resolved" "https://pkgs.dev.azure.com/virtus-loyalty/_packaging/eight-feed/npm/registry/react/-/react-18.1.0.tgz"
   "version" "18.1.0"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { List } from "../components/List/list";
 import { SearchBar } from "../components/SearchBar/searchBar";
 import HomeScreen from "./home.screen";
+import { createNode, deleteNode, readNode, updateNode } from "../firebase";
 
 const mockData = {
   pathOfExile: {
@@ -32,27 +33,47 @@ const mockData = {
       },
     },
     gamePath: "pathOfExile.exe",
-    gameTags: ["build planner"],
+    gameTags: { 0: "build planner" },
   },
 };
+
 const HomeController = () => {
+  const [firebaseData, setFirebaseData] = useState({});
   const [tools, setTools] = useState([]);
 
   useEffect(() => {
-    const mockArray = Object.values(mockData["pathOfExile"].tools);
-    const filteredTools = filterToolList("", mockArray).length;
-    setTools(filteredTools);
+    fetchData();
   }, []);
+  useEffect(() => {
+    console.log("HOME CONTROLLER: ", firebaseData);
+    // const mockArray = Object.values(mockData["pathOfExile"].tools);
+    //@ts-ignore
+    const temp = firebaseData["pathOfExile"]?.tools;
+    // const filteredTools = filterToolList("tool", temp);
+    setTools(temp);
+  }, [firebaseData]);
+
+  // if (firebaseData) {
+  //   //@ts-ignore
+  //   console.log("POE TOOLS: ", firebaseData["pathOfExile"]?.tools);
+  // }
   // return <HomeScreen />;
   const handlers = {
     tools,
   };
+
+  const fetchData = async () => {
+    const data = await readNode();
+    setFirebaseData(data);
+  };
+
   return <HomeScreen {...handlers} />;
 };
 
 //@ts-ignore
 const filterToolList = (input, data) => {
-  if (!input) {
+  console.log({ input, data });
+  if (!input || !data) {
     return [];
   }
 
@@ -63,6 +84,7 @@ const filterToolList = (input, data) => {
     toolName.toLowerCase().includes(filter)
   );
 
+  console.log("FILTERED DATA", { filteredData });
   return filteredData;
 };
 
