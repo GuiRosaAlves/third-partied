@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, update, push, remove, set } from 'firebase/database';
-import { firebaseConfig } from "../constants";
+import { firebaseConfig } from "../config";
 
 export const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -45,9 +45,36 @@ export async function deleteNode(path: string) {
     console.log('----DELETING----');
 
     const response =
-        await remove(child(dbRef, `/${path}`))
+        await remove(child(dbRef, `/${path}/tools`))
             .then((value) => console.log('RESPONSE: ', value))
             .catch(() => false);
 
     return response;
+}
+
+export async function fetchGameInfo(gameName = 'pathOfExile') {
+    const response =
+        await get(child(dbRef, `/${gameName}`))
+            .then()
+            .catch();
+
+    return response.val();
+}
+
+export async function fetchTools(gameName = 'pathOfExile') {
+    const response =
+        await get(child(dbRef, `/${gameName}/tools`))
+            .then()
+            .catch();
+
+    return response.val();
+}
+
+export async function fetchGameTags(gameName = 'pathOfExile') {
+    const response =
+        await get(child(dbRef, `/${gameName}/gameTags`))
+            .then()
+            .catch();
+
+    return response.val();
 }

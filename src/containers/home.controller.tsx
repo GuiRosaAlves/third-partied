@@ -37,27 +37,19 @@ const mockData = {
   },
 };
 
-const HomeController = () => {
+const HomeController = ({
+  gameTools,
+  gameTags,
+}: {
+  gameTools: any[];
+  gameTags: any[];
+}) => {
   const [firebaseData, setFirebaseData] = useState({});
   const [tools, setTools] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
-  useEffect(() => {
-    console.log("HOME CONTROLLER: ", firebaseData);
-    // const mockArray = Object.values(mockData["pathOfExile"].tools);
-    //@ts-ignore
-    const temp = firebaseData["pathOfExile"]?.tools;
-    // const filteredTools = filterToolList("tool", temp);
-    setTools(temp);
-  }, [firebaseData]);
-
-  // if (firebaseData) {
-  //   //@ts-ignore
-  //   console.log("POE TOOLS: ", firebaseData["pathOfExile"]?.tools);
-  // }
-  // return <HomeScreen />;
   const handlers = {
     tools,
   };
@@ -70,21 +62,17 @@ const HomeController = () => {
   return <HomeScreen {...handlers} />;
 };
 
-//@ts-ignore
-const filterToolList = (input, data) => {
-  console.log({ input, data });
+const filterToolList = (input: any, data: any) => {
   if (!input || !data) {
     return [];
   }
 
   const filter = input.toLowerCase();
 
-  //@ts-ignore
-  const filteredData = data.filter(({ toolName }) =>
+  const filteredData = data.filter(({ toolName }: { toolName: string }) =>
     toolName.toLowerCase().includes(filter)
   );
 
-  console.log("FILTERED DATA", { filteredData });
   return filteredData;
 };
 

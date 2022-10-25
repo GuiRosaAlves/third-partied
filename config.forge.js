@@ -8,4 +8,9 @@ module.exports = {
       prod: "com.app",
     }),
   },
+  hooks: {
+    generateAssets: async (forgeConfig, platform, arch) => {
+      //TODO: GENERATE RESOURCES FOLDER
+    },
+  },
 };

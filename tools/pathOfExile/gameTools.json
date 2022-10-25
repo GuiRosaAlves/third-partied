@@ -1,0 +1,30 @@
+{
+  "tools": [
+    {
+      "toolName": "pathOfBuilding",
+      "addedCount": 0,
+      "toolPath": "pob.exe",
+      "toolUrl": "www.google.com",
+      "gitAPIUrl": "api.github.com",
+      "installedCount": 0,
+      "openedCount": 0,
+      "processName": "pob",
+      "tags": [0],
+      "uninstallPath": "uninstall.exe"
+    },
+    {
+      "toolName": "toolName",
+      "addedCount": 0,
+      "toolPath": "pob.exe",
+      "toolUrl": "www.google.com",
+      "gitAPIUrl": "api.github.com",
+      "installedCount": 0,
+      "openedCount": 0,
+      "processName": "pob",
+      "tags": [0],
+      "uninstallPath": "uninstall.exe"
+    }
+  ],
+  "gamePath": "pathOfExile.exe",
+  "gameTags": ["build planner"]
+}
