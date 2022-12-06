@@ -8,11 +8,20 @@ const { ipcRenderer } = window.require("electron");
 export const currentGame = "pathOfExile";
 
 async function render() {
-  const firebaseData = await fetchGameInfo(currentGame);
-  const localData = await ipcRenderer.invoke("getLocalData", currentGame);
+  let gameTools: any[] = [];
+  let gameTags: any[] = [];
 
-  const gameTools = [...firebaseData.tools, ...localData.tools];
-  const gameTags = [...firebaseData.gameTags, ...localData.gameTags];
+  const firebaseData = await fetchGameInfo(currentGame);
+  gameTools = !firebaseData?.tools
+    ? gameTools
+    : [...gameTools, ...firebaseData.tools];
+  gameTags = !firebaseData?.tags ? gameTags : [...firebaseData.tags];
+
+  const localData = await ipcRenderer.invoke("getLocalData", currentGame);
+  gameTools = !localData?.tools
+    ? gameTools
+    : [...gameTools, ...localData.tools];
+  gameTags = !localData?.tags ? gameTags : [...gameTags, ...localData.gameTags];
 
   const container = document.getElementById("root") ?? document.body;
   const root = createRoot(container);

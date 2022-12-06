@@ -71,12 +71,18 @@ app.on("activate", () => {
 // }
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 
 ipcMain.handle("getLocalData", (event, gameName) => {
-  const localToolsPath = path.resolve(`./tools/${gameName}`);
-  if (!fs.existsSync(`./tools/${gameName}/gameTools.json`)) {
-    fs.mkdirSync(`./tools/${gameName}`, { recursive: true });
-    fs.writeFileSync(`./tools/${gameName}/gameTools.json`, "{}");
+  const homeDir = os.homedir();
+  const localToolsPath = path.resolve(
+    `${homeDir}/documents/third-partied/${gameName}`
+  );
+  if (!fs.existsSync(`${localToolsPath}/gameTools.json`)) {
+    fs.mkdirSync(localToolsPath, {
+      recursive: true,
+    });
+    fs.writeFileSync(`${localToolsPath}/gameTools.json`, "{}");
   }
 
   const localData = JSON.parse(
