@@ -44,25 +44,31 @@ const HomeController = ({
   gameTools: any[];
   gameTags: any[];
 }) => {
-  const [firebaseData, setFirebaseData] = useState({});
-  const [tools, setTools] = useState([]);
+  const [searchBarText, setSearchBarText] = useState("");
+  const [listTools, setlistTools] = useState(gameTools || []);
 
   useEffect(() => {
-    fetchData();
+    console.log({ gameTools });
   }, []);
-  const handlers = {
-    tools,
-  };
 
-  const fetchData = async () => {
-    const data = await readNode();
-    setFirebaseData(data);
+  function handleFilterInput(newInput: string) {
+    const filteredTools = filterToolList(newInput, gameTools);
+    const filterResultsGreaterZero = filteredTools.length > 0;
+
+    setlistTools(filterResultsGreaterZero ? filteredTools : gameTools);
+    setSearchBarText(newInput);
+  }
+
+  const handlers = {
+    searchBarText,
+    handleFilterInput,
+    tools: listTools,
   };
 
   return <HomeScreen {...handlers} />;
 };
 
-const filterToolList = (input: any, data: any) => {
+const filterToolList = (input: any, data: any): any[] => {
   if (!input || !data) {
     return [];
   }

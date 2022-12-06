@@ -1,8 +1,9 @@
+import { colors } from "../config/palette";
 import { List } from "../components/List/list";
 import { SearchBar } from "../components/SearchBar/searchBar";
 
 //@ts-ignore
-const HomeScreen = ({ tools }) => {
+const HomeScreen = ({ searchBarText, handleFilterInput, tools }) => {
   return (
     <div
       style={{
@@ -25,7 +26,7 @@ const HomeScreen = ({ tools }) => {
             display: "flex",
             height: "100%",
             width: "10%",
-            backgroundColor: "gray",
+            backgroundColor: colors.gray[1000],
           }}
         >
           <div
@@ -40,6 +41,7 @@ const HomeScreen = ({ tools }) => {
               fontFamily: "monospace",
               fontSize: 20,
               fontWeight: "bold",
+              color: colors.white,
             }}
           >
             TP
@@ -63,7 +65,10 @@ const HomeScreen = ({ tools }) => {
               backgroundColor: "red",
             }}
           >
-            <SearchBar />
+            <SearchBar
+              inputText={searchBarText}
+              onChangeInput={handleFilterInput}
+            />
           </div>
           <div
             style={{
@@ -75,10 +80,7 @@ const HomeScreen = ({ tools }) => {
               overflow: "auto",
             }}
           >
-            <List
-              // color="blue"
-              data={tools}
-            />
+            <List color={colors.gray[200]} data={tools} />
           </div>
         </div>
       </div>

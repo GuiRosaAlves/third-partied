@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from "../../config/palette";
 import { Tool } from "../../firebase/types";
 import { Card } from "../Card/card";
 
@@ -34,7 +35,13 @@ export const List = ({
         }}
       >
         <div style={{ height: "100%", padding: "1%" }}>
-          <Card width="100%" height="100px" tool={value}></Card>
+          <Card
+            width="100%"
+            height="100px"
+            tool={value}
+            backgroundColor={colors.gray[800]}
+            textColor={colors.gray[200]}
+          ></Card>
         </div>
       </div>
     ))}

@@ -1,21 +1,24 @@
 import React, { useState } from "react";
+import { colors } from "../../config/palette";
 
-export const SearchBar = () => {
-  const [text, setText] = useState("");
+interface SearchBarType {
+  inputText: string;
+  onChangeInput: (newInput: string) => void;
+}
+export const SearchBar = ({ inputText, onChangeInput }: SearchBarType) => {
   return (
     <div
       style={{
         display: "flex",
         flex: 1,
         height: "100%",
-        backgroundColor: "lightgrey",
+        backgroundColor: colors.gray[1000],
       }}
     >
       <input
-        value={text}
-        onInput={(event) => {
-          const { target } = event;
-          setText((target as HTMLInputElement).value);
+        value={inputText}
+        onChange={({ target }) => {
+          onChangeInput(target.value);
         }}
         type="text"
         style={{
@@ -25,7 +28,7 @@ export const SearchBar = () => {
           borderRadius: "0.5vh",
           fontSize: 10,
           margin: "1%",
-          color: "red",
+          color: "black",
         }}
       ></input>
     </div>
