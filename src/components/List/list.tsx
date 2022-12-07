@@ -40,7 +40,7 @@ export const List = ({
             height="100px"
             tool={value}
             backgroundColor={colors.gray[800]}
-            textColor={colors.gray[200]}
+            textColor={colors.gray[100]}
           ></Card>
         </div>
       </div>

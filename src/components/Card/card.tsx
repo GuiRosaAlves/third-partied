@@ -2,6 +2,7 @@ import React from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { Tool } from "../../firebase/types";
 import "./card.css";
+const { ipcRenderer } = window.require("electron");
 
 export const Card = ({
   width = "20",
@@ -19,6 +20,7 @@ export const Card = ({
   tool: Tool;
 }) => (
   <div
+    onMouseUp={() => {}}
     style={{
       width,
       height,
@@ -42,13 +44,24 @@ export const Card = ({
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           <AiOutlineAppstoreAdd
+            // onMouseUp={() => {
+            //   if (!tool.isInstalled) {
+            //     return;
+            //   }
+            //   ipcRenderer.invoke(
+            //     "openToolFolder",
+            //     "pathOfExile",
+            //     tool.toolPath
+            //   );
+            // }}
             className="tooltip-on-hover"
             size={24}
             style={{ padding: 4, color: textColor }}
           />
-          <a style={{ color: textColor }} className="tooltip">
+
+          {/* {tool.isLocal ? <a style={{ color: textColor }} className="tooltip">
             Verified
-          </a>
+          </a>} */}
         </div>
       </div>
       <div
@@ -60,7 +73,9 @@ export const Card = ({
           flexDirection: "column",
         }}
       >
-        <a style={{ fontSize: 12, color: textColor }}>External/Local</a>
+        <a style={{ fontSize: 12, color: textColor }}>
+          {tool.toolUrl ? "External" : "Local"}
+        </a>
         <AiOutlineAppstoreAdd
           title="Open folder"
           size={16}

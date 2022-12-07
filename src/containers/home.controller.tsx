@@ -3,6 +3,7 @@ import { List } from "../components/List/list";
 import { SearchBar } from "../components/SearchBar/searchBar";
 import HomeScreen from "./home.screen";
 import { createNode, deleteNode, readNode, updateNode } from "../firebase";
+import { Tool } from "../firebase/types";
 
 const mockData = {
   pathOfExile: {
@@ -40,15 +41,17 @@ const mockData = {
 const HomeController = ({
   gameTools,
   gameTags,
+  installedTools,
 }: {
-  gameTools: any[];
-  gameTags: any[];
+  gameTools: Tool[];
+  gameTags: string[];
+  installedTools: Tool[];
 }) => {
   const [searchBarText, setSearchBarText] = useState("");
   const [listTools, setlistTools] = useState(gameTools || []);
 
   useEffect(() => {
-    console.log({ gameTools });
+    console.log({ installedTools });
   }, []);
 
   function handleFilterInput(newInput: string) {

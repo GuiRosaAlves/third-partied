@@ -23,6 +23,7 @@ module.exports = {
       https: false,
       stream: false,
       os: false,
+      ps: false,
     },
   },
 };

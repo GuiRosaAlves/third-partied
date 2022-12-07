@@ -18,14 +18,28 @@ async function render() {
   gameTags = !firebaseData?.tags ? gameTags : [...firebaseData.tags];
 
   const localData = await ipcRenderer.invoke("getLocalData", currentGame);
+
+  // await ipcRenderer.invoke("openToolsFolder", currentGame);
+
   gameTools = !localData?.tools
     ? gameTools
     : [...gameTools, ...localData.tools];
   gameTags = !localData?.tags ? gameTags : [...gameTags, ...localData.gameTags];
 
+  const installedTools = await ipcRenderer.invoke(
+    "getInstalledTools",
+    currentGame,
+    gameTools
+  );
+
   const container = document.getElementById("root") ?? document.body;
   const root = createRoot(container);
-  root.render(<HomeController gameTools={gameTools} gameTags={gameTags} />);
+  const props = {
+    gameTools,
+    gameTags,
+    installedTools,
+  };
+  root.render(<HomeController {...props} />);
 }
 
 render();
