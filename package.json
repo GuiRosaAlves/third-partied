@@ -51,9 +51,9 @@
         }
       ],
       "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
+        {
+          "name": "@electron-forge/plugin-webpack",
+          "config": {
             "mainConfig": "./webpack.main.config.js",
             "devContentSecurityPolicy": "connect-src 'self'",
             "renderer": {
@@ -67,7 +67,7 @@
               ]
             }
           }
-        ]
+        }
       ]
     }
   },
