@@ -65,7 +65,9 @@ const HomeScreen = ({ searchBarText, handleFilterInput, tools }) => {
           <div
             style={{ color: colors.white, paddingBottom: 20 }}
             onMouseUp={() => {
-              ipcRenderer.invoke("closeTool", "Path of Building*");
+              ipcRenderer.invoke("closeTool", {
+                processName: '"Path of Building*"',
+              });
             }}
           >
             Close Tool
@@ -76,7 +78,7 @@ const HomeScreen = ({ searchBarText, handleFilterInput, tools }) => {
               ipcRenderer.invoke(
                 "openTool",
                 "pathOfExile",
-                "Path of Building/Path of Building.json"
+                "Path of Building/Path of Building.exe"
               );
             }}
           >

@@ -112,28 +112,31 @@ ipcMain.handle("getInstalledTools", (event, gameName, tools: Tool[]) => {
 });
 
 ipcMain.handle("openTool", (event, gameName, toolPath: string) => {
-  const homeDir = os.homedir();
-
-  const localToolsPath = path.resolve(
-    `${homeDir}/documents/third-partied/${gameName}`
-  );
-
-  if (!fs.existsSync(`${localToolsPath}/${toolPath}`)) {
-    console.log("Tool path invalid, ", `${localToolsPath}/${toolPath}`);
-    return false;
-  }
-
-  console.log("Tool path is valid");
   //TODO: CHECK IF IT IS A WEB TOOL
   // if(tool.toolWebPath){
   //  OPEN WEB PAGE
   //  return true;
   // }
+  const documentsPath = app.getPath("documents");
+  const localToolPath = path.join(
+    documentsPath,
+    "third-partied",
+    gameName,
+    toolPath
+  );
 
-  console.log("OPENING FILE at ", `${localToolsPath}/${toolPath}`);
-  shell.openPath(`${localToolsPath}/${toolPath}`);
+  if (!fs.existsSync(localToolPath)) {
+    console.log("File not found!");
+    return false;
+  }
 
-  return true;
+  shell.openPath(localToolPath).then((error) => {
+    if (error) {
+      console.log({ error });
+      return;
+    }
+    return;
+  });
 });
 
 ipcMain.handle("closeTool", (event, tool) => {
