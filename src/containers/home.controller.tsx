@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List } from "../components/List/list";
-import { SearchBar } from "../components/SearchBar/searchBar";
 import HomeScreen from "./home.screen";
-import { createNode, deleteNode, readNode, updateNode } from "../firebase";
 import { Tool } from "../firebase/types";
 
 const mockData = {
@@ -48,7 +45,7 @@ const HomeController = ({
   installedTools: Tool[];
 }) => {
   const [searchBarText, setSearchBarText] = useState("");
-  const [listTools, setlistTools] = useState(gameTools || []);
+  const [listTools, setListTools] = useState(gameTools || []);
 
   useEffect(() => {
     console.log({ installedTools });
@@ -58,7 +55,7 @@ const HomeController = ({
     const filteredTools = filterToolList(newInput, gameTools);
     const filterResultsGreaterZero = filteredTools.length > 0;
 
-    setlistTools(filterResultsGreaterZero ? filteredTools : gameTools);
+    setListTools(filterResultsGreaterZero ? filteredTools : gameTools);
     setSearchBarText(newInput);
   }
 

@@ -82,15 +82,15 @@ ipcMain.handle("getLocalData", (event, gameName) => {
     `${homeDir}/documents/third-partied/${gameName}`
   );
 
-  if (!fs.existsSync(`${localToolsPath}/gameTools.json`)) {
+  if (!fs.existsSync(`${localToolsPath}/game-tools.json`)) {
     fs.mkdirSync(localToolsPath, {
       recursive: true,
     });
-    fs.writeFileSync(`${localToolsPath}/gameTools.json`, "{}");
+    fs.writeFileSync(`${localToolsPath}/game-tools.json`, "{}");
   }
 
   const localData = JSON.parse(
-    fs.readFileSync(`${localToolsPath}/gameTools.json`)
+    fs.readFileSync(`${localToolsPath}/game-tools.json`)
   );
 
   return localData;
@@ -184,4 +184,43 @@ ipcMain.handle("openToolsFolder", (event, gameName, toolPath = "") => {
   console.log({ dirToOpen });
 
   shell.openPath(dirToOpen);
+});
+
+ipcMain.handle("getToolboxState", (event, gameName) => {
+  const documentsPath = app.getPath("documents");
+  const filePath = path.join(
+    documentsPath,
+    "third-partied",
+    gameName,
+    "toolbox-state.json"
+  );
+
+  if (!fs.existsSync(filePath)) {
+    fs.mkdirSync(filePath, {
+      recursive: true,
+    });
+    fs.writeFileSync(filePath, "{}");
+  }
+
+  const state = JSON.parse(fs.readFileSync(filePath));
+
+  return state;
+});
+
+ipcMain.handle("saveToolboxState", (event, gameName, newState) => {
+  const documentsPath = app.getPath("documents");
+  const filePath = path.join(
+    documentsPath,
+    "third-partied",
+    gameName,
+    "toolbox-state.json"
+  );
+
+  if (!fs.existsSync(filePath)) {
+    fs.mkdirSync(filePath, {
+      recursive: true,
+    });
+  }
+  const state = fs.writeFileSync(filePath, JSON.stringify(newState));
+  return state;
 });

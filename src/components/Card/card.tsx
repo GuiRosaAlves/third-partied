@@ -1,6 +1,8 @@
 import React from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { colors } from "../../config/palette";
 import { Tool } from "../../firebase/types";
+import { Button } from "../Button/button";
 import "./card.css";
 const { ipcRenderer } = window.require("electron");
 
@@ -170,6 +172,56 @@ export const Card = ({
             {tool.openedCount}
           </a>
         </div>
+        <Button
+          onPress={() => {
+            console.log("Funciona");
+          }}
+          width={80}
+          style={{ marginLeft: 2 }}
+        >
+          <a
+            style={{
+              color: colors.gray[1000],
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
+          >
+            {false ? "Open" : "Close"}
+          </a>
+        </Button>
+        <Button
+          onPress={() => {
+            console.log("Funciona");
+          }}
+          width={80}
+          style={{ marginLeft: 2 }}
+        >
+          <a
+            style={{
+              color: colors.gray[1000],
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
+          >
+            {false ? "Uninstall" : "Install"}
+          </a>
+        </Button>
+        <Button
+          onPress={() => {
+            console.log("Funciona");
+          }}
+          style={{ marginLeft: 2 }}
+        >
+          <a
+            style={{
+              color: colors.gray[1000],
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
+          >
+            {false ? "Add to Toolbar" : "Remove from Toolbar"}
+          </a>
+        </Button>
       </div>
     </div>
   </div>
