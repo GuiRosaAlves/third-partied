@@ -47,10 +47,6 @@ const HomeController = ({
   const [searchBarText, setSearchBarText] = useState("");
   const [listTools, setListTools] = useState(gameTools || []);
 
-  useEffect(() => {
-    console.log({ installedTools });
-  }, []);
-
   function handleFilterInput(newInput: string) {
     const filteredTools = filterToolList(newInput, gameTools);
     const filterResultsGreaterZero = filteredTools.length > 0;

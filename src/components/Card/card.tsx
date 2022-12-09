@@ -1,10 +1,8 @@
-import React from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { colors } from "../../config/palette";
 import { Tool } from "../../firebase/types";
 import { Button } from "../Button/button";
 import "./card.css";
-const { ipcRenderer } = window.require("electron");
 
 export const Card = ({
   width = "20",
@@ -13,6 +11,12 @@ export const Card = ({
   backgroundColor = "lightgrey",
   textColor = "#ffffff",
   tool,
+  onPressOpen,
+  onPressClose,
+  onPressInstall,
+  onPressUninstall,
+  onPressAddToToolbar,
+  onPressRemoveFromToolbar,
 }: {
   width?: string;
   height?: string;
@@ -20,6 +24,12 @@ export const Card = ({
   backgroundColor?: string;
   textColor?: string;
   tool: Tool;
+  onPressOpen: () => void;
+  onPressClose: () => void;
+  onPressInstall: () => void;
+  onPressUninstall: () => void;
+  onPressAddToToolbar: () => void;
+  onPressRemoveFromToolbar: () => void;
 }) => (
   <div
     onMouseUp={() => {}}
@@ -58,12 +68,23 @@ export const Card = ({
             // }}
             className="tooltip-on-hover"
             size={24}
-            style={{ padding: 4, color: textColor }}
+            style={{
+              padding: 4,
+              color: tool.source === "cloud" ? colors.cyan[500] : textColor,
+            }}
           />
 
-          {/* {tool.isLocal ? <a style={{ color: textColor }} className="tooltip">
-            Verified
-          </a>} */}
+          {tool.source === "cloud" && (
+            <a
+              style={{
+                fontSize: 10,
+                color: textColor,
+              }}
+              className="tooltip"
+            >
+              Verified
+            </a>
+          )}
         </div>
       </div>
       <div
@@ -76,7 +97,7 @@ export const Card = ({
         }}
       >
         <a style={{ fontSize: 12, color: textColor }}>
-          {tool.toolUrl ? "External" : "Local"}
+          {tool.toolWebApp ? "External Tool" : "Local Tool"}
         </a>
         <AiOutlineAppstoreAdd
           title="Open folder"
@@ -173,9 +194,7 @@ export const Card = ({
           </a>
         </div>
         <Button
-          onPress={() => {
-            console.log("Funciona");
-          }}
+          onPress={tool.isOpened ? onPressOpen : onPressClose}
           width={80}
           style={{ marginLeft: 2 }}
         >
@@ -186,14 +205,43 @@ export const Card = ({
               paddingRight: 10,
             }}
           >
-            {false ? "Open" : "Close"}
+            {!tool.isOpened ? "Open" : "Close"}
           </a>
         </Button>
+        {!tool.isInstalled && tool.gitApiUrl && (
+          <Button onPress={onPressInstall} width={80} style={{ marginLeft: 2 }}>
+            <a
+              style={{
+                color: colors.gray[1000],
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              Install
+            </a>
+          </Button>
+        )}
+        {tool.isInstalled && (
+          <Button
+            onPress={onPressUninstall}
+            width={80}
+            style={{ marginLeft: 2 }}
+          >
+            <a
+              style={{
+                color: colors.gray[1000],
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              Uninstall
+            </a>
+          </Button>
+        )}
         <Button
-          onPress={() => {
-            console.log("Funciona");
-          }}
-          width={80}
+          onPress={
+            !tool.isOnToolbox ? onPressAddToToolbar : onPressRemoveFromToolbar
+          }
           style={{ marginLeft: 2 }}
         >
           <a
@@ -203,23 +251,7 @@ export const Card = ({
               paddingRight: 10,
             }}
           >
-            {false ? "Uninstall" : "Install"}
-          </a>
-        </Button>
-        <Button
-          onPress={() => {
-            console.log("Funciona");
-          }}
-          style={{ marginLeft: 2 }}
-        >
-          <a
-            style={{
-              color: colors.gray[1000],
-              paddingLeft: 10,
-              paddingRight: 10,
-            }}
-          >
-            {false ? "Add to Toolbar" : "Remove from Toolbar"}
+            {!tool.isOnToolbox ? "Add to Toolbar" : "Remove from Toolbar"}
           </a>
         </Button>
       </div>

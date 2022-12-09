@@ -76,36 +76,35 @@ const os = require("os");
 const { exec } = require("child_process");
 
 ipcMain.handle("getLocalData", (event, gameName) => {
-  const homeDir = os.homedir();
-
-  const localToolsPath = path.resolve(
-    `${homeDir}/documents/third-partied/${gameName}`
+  const documentsPath = app.getPath("documents");
+  const localDataPath = path.join(
+    documentsPath,
+    "third-partied",
+    gameName,
+    "game-tools.json"
   );
-
-  if (!fs.existsSync(`${localToolsPath}/game-tools.json`)) {
-    fs.mkdirSync(localToolsPath, {
-      recursive: true,
-    });
-    fs.writeFileSync(`${localToolsPath}/game-tools.json`, "{}");
+  if (!fs.existsSync(localDataPath)) {
+    fs.writeFileSync(localDataPath, "{}");
   }
 
-  const localData = JSON.parse(
-    fs.readFileSync(`${localToolsPath}/game-tools.json`)
-  );
+  const localData = JSON.parse(fs.readFileSync(localDataPath));
 
   return localData;
 });
 
 ipcMain.handle("getInstalledTools", (event, gameName, tools: Tool[]) => {
   const homeDir = os.homedir();
-
-  const localToolsPath = path.resolve(
-    `${homeDir}/documents/third-partied/${gameName}`
-  );
+  const documentsPath = app.getPath("documents");
 
   const installedTools = tools.filter((tool) => {
-    const isToolInstalled = fs.existsSync(`${localToolsPath}/${tool.toolPath}`);
-    console.log({ isToolInstalled });
+    const localToolsPath = path.join(
+      documentsPath,
+      `third-partied`,
+      gameName,
+      tool.toolPath
+    );
+    const isToolInstalled = fs.existsSync(localToolsPath);
+
     return isToolInstalled;
   });
   return installedTools;
@@ -113,7 +112,7 @@ ipcMain.handle("getInstalledTools", (event, gameName, tools: Tool[]) => {
 
 ipcMain.handle("openTool", (event, gameName, toolPath: string) => {
   //TODO: CHECK IF IT IS A WEB TOOL
-  // if(tool.toolWebPath){
+  // if(tool.toolWebApp){
   //  OPEN WEB PAGE
   //  return true;
   // }
@@ -181,46 +180,40 @@ ipcMain.handle("openToolsFolder", (event, gameName, toolPath = "") => {
     `${homeDir}/documents/third-partied/${gameName}/${toolPath}`
   );
 
-  console.log({ dirToOpen });
-
   shell.openPath(dirToOpen);
 });
 
 ipcMain.handle("getToolboxState", (event, gameName) => {
   const documentsPath = app.getPath("documents");
-  const filePath = path.join(
+  const toolboxPath = path.join(
     documentsPath,
     "third-partied",
     gameName,
     "toolbox-state.json"
   );
 
-  if (!fs.existsSync(filePath)) {
-    fs.mkdirSync(filePath, {
-      recursive: true,
-    });
-    fs.writeFileSync(filePath, "{}");
+  if (!fs.existsSync(toolboxPath)) {
+    fs.writeFileSync(toolboxPath, "{}");
   }
 
-  const state = JSON.parse(fs.readFileSync(filePath));
+  const state = JSON.parse(fs.readFileSync(toolboxPath));
 
   return state;
 });
 
 ipcMain.handle("saveToolboxState", (event, gameName, newState) => {
   const documentsPath = app.getPath("documents");
-  const filePath = path.join(
+  const toolboxPath = path.join(
     documentsPath,
     "third-partied",
     gameName,
     "toolbox-state.json"
   );
 
-  if (!fs.existsSync(filePath)) {
-    fs.mkdirSync(filePath, {
-      recursive: true,
-    });
+  if (!fs.existsSync(toolboxPath)) {
+    fs.writeFileSync(toolboxPath, "{}");
   }
-  const state = fs.writeFileSync(filePath, JSON.stringify(newState));
+
+  const state = fs.writeFileSync(toolboxPath, JSON.stringify(newState));
   return state;
 });
