@@ -97,7 +97,7 @@ export const Card = ({
         }}
       >
         <a style={{ fontSize: 12, color: textColor }}>
-          {tool.toolWebApp ? "External Tool" : "Local Tool"}
+          {tool.toolWebApp ? "Web Tool" : "Executable Tool"}
         </a>
         <AiOutlineAppstoreAdd
           title="Open folder"

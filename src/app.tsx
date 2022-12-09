@@ -31,13 +31,15 @@ async function render() {
   gameTags = !firebaseData?.tags ? gameTags : [...firebaseData.tags];
 
   const mappedLocalTools = localTools
-    ? localTools.map(({ tool }) => ({
-        source: "local",
-        isOpened: false,
-        isInstalled: false,
-        isOnToolbox: false,
-        ...tool,
-      }))
+    ? localTools.map((tool) => {
+        return {
+          source: "local",
+          isOpened: false,
+          isInstalled: false,
+          isOnToolbox: false,
+          ...tool,
+        };
+      })
     : [];
 
   gameTools = !mappedLocalTools

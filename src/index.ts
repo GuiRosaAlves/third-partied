@@ -92,8 +92,7 @@ ipcMain.handle("getLocalData", (event, gameName) => {
   return localData;
 });
 
-ipcMain.handle("getInstalledTools", (event, gameName, tools: Tool[]) => {
-  const homeDir = os.homedir();
+ipcMain.handle("getInstalledTools", (event, gameName, tools) => {
   const documentsPath = app.getPath("documents");
 
   const installedTools = tools.filter((tool) => {
