@@ -96,6 +96,10 @@ ipcMain.handle("getInstalledTools", (event, gameName, tools) => {
   const documentsPath = app.getPath("documents");
 
   const installedTools = tools.filter((tool) => {
+    if (!tool?.toolPath) {
+      return;
+    }
+
     const localToolsPath = path.join(
       documentsPath,
       `third-partied`,
